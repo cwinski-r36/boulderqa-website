@@ -31,6 +31,10 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - Stripped broken URL-encoded WP asset `<link>`/`<script>` tags from all 51 pages — wget URL-encoded `?ver=8.44` → `%3Fver=8.44` in file paths, making them unloadable; removed ~12-13 dead tags per page
 - Fixed one content link in blunders post (`index.html%3Fus_main_page_section=contact.html` → `index.html#contact`)
 - Ran full site audit: all nav links, logo links, copyright, JS filters, contact form, viewport meta, and search widget removal confirmed clean across all 52 pages
+- Moved `boulder-qas-2023-recommended-browser-device-list.html` (root-level file) into proper directory structure — it was the only blog post not in a `SLUG/index.html` directory, causing its sitemap URL to 404
+- Fixed 35 archive/category pages that had absolute `https://boulderqa.com/YEAR/MONTH/...` empty anchor links pointing to the old WordPress site (replaced with correct relative paths)
+- Added descriptive alt text to 14 client logo images on the homepage
+- Live preview URL: https://cwinski-r36.github.io/boulderqa-website/ (subdirectory hosted, JS filters and relative paths all work correctly here)
 
 ## Site Structure
 - `index.html` — homepage (one-page site with #home, #about, #services, #blog, #contact sections)
@@ -41,6 +45,7 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - `wp-content/` — theme CSS, images, uploads (keep these)
 - `wp-includes/` — theme JS (keep these)
 - Note: files in `wp-content/themes/Impreza/` and `wp-includes/js/` have literal `?ver=X.X` in their filenames (a wget crawl artifact). They can't be served by any static host. The pages don't need them — all critical CSS (67KB) and JS (15KB) is already inlined in each page's `<style>` and `<script>` blocks.
+- Exception: font files (`wp-content/themes/Impreza/fonts/fa-*.woff2?ver=8.44`) ARE referenced by inline CSS `@font-face` blocks via `%3Fver=8.44` URLs. GitHub Pages decodes `%3F` → `?` and finds the file on disk. Verified working (HTTP 200 confirmed). Do not rename these files.
 
 ## Key Details
 - Brand color: `#be1e2d`
@@ -96,6 +101,13 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 4. Submit sitemap to Google Search Console (https://www.boulderqa.com/sitemap.xml)
 5. Test contact form — first submission triggers a Formsubmit.co verification email to info@boulderqa.com
 6. Cancel GoDaddy WordPress hosting plan (do this last)
+
+## Verified Working on Live GitHub Pages Preview
+- JS category/archive filters work at the `/boulderqa-website/` subdirectory path — the `indexOf('category')` approach finds the slug correctly regardless of path prefix
+- Font Awesome icon fonts load correctly — GitHub Pages serves the `?ver=8.44`-named files when requested via `%3Fver=8.44` URL encoding
+- All relative paths resolve correctly for all page depths (root, 1-level, 2-level slugs)
+- 404.html is served by GitHub Pages for missing URLs
+- No PHP files, SQL dumps, wp-config, `.env`, or credentials anywhere in the repo
 
 ## Known Non-Issues (False Positives in Link Audits)
 - Anchor links (`../../index.html#home`, etc.) — audit scripts treat `#anchor` as a file path; these work fine in browser
