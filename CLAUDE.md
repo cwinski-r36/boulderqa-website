@@ -23,20 +23,67 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - Removed search widget from all pages (doesn't work on static sites)
 - Added JS filtering to category and archive pages so they show only matching posts
 - Removed all GoDaddy CSS references
-- Deleted 18 WordPress RSS feed pages
+- Deleted 18 WordPress RSS feed pages (`*/feed/index.html`)
+- Added logo link wrapper on all pages so logo click goes to homepage
+- Added dynamic copyright year to all pages using `document.write(new Date().getFullYear())`
+- Fixed duplicate post on agile category page (removed secondary `for_current_wp_query` grid from all 18 category pages)
+- Created branded 404 page (`404.html`) — GitHub Pages serves this automatically for missing URLs
 
 ## Site Structure
 - `index.html` — homepage (one-page site with #home, #about, #services, #blog, #contact sections)
 - `SLUG/index.html` — individual blog posts (17 posts)
 - `category/SLUG/index.html` — category filtered views (18 categories)
 - `YYYY/MM/index.html` — archive filtered views (15 month archives)
+- `404.html` — custom branded 404 page
 - `wp-content/` — theme CSS, images, uploads (keep these)
 - `wp-includes/` — theme JS (keep these)
 
 ## Key Details
 - Brand color: `#be1e2d`
+- Google Fonts: Dosis (headings/UI) + PT Sans (body)
 - Contact form: https://formsubmit.co (action="https://formsubmit.co/info@boulderqa.com")
 - Category/archive pages use injected JS to filter articles client-side (articles have CSS classes like `category-agile` and `datetime` attributes already embedded from WordPress)
+- Root-relative favicon paths (`/favicon.ico` etc.) work on production domain but not localhost — this is expected
+
+## JS Filter Snippets
+
+**Category pages** (injected before `</body>`):
+```javascript
+(function(){
+  var path = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\/+$/, '');
+  var parts = path.split('/');
+  var catIdx = parts.indexOf('category');
+  if (catIdx === -1) return;
+  var slug = parts[catIdx + 1];
+  if (!slug) return;
+  var cls = 'category-' + slug;
+  document.querySelectorAll('article.w-grid-item').forEach(function(art){
+    if (!art.classList.contains(cls)) art.style.display = 'none';
+  });
+})();
+```
+
+**Archive pages** (injected before `</body>`):
+```javascript
+(function(){
+  var path = window.location.pathname.replace(/\/index\.html$/, '/').replace(/\/+$/, '');
+  var parts = path.split('/').filter(Boolean);
+  var mm = parts[parts.length - 1];
+  var yyyy = parts[parts.length - 2];
+  if (!yyyy || !mm || !/^\d{4}$/.test(yyyy) || !/^\d{2}$/.test(mm)) return;
+  var prefix = yyyy + '-' + mm;
+  document.querySelectorAll('article.w-grid-item').forEach(function(art){
+    var time = art.querySelector('time[datetime]');
+    if (!time || time.getAttribute('datetime').indexOf(prefix) !== 0) {
+      art.style.display = 'none';
+    }
+  });
+})();
+```
+
+## Python Bulk-Edit Scripts
+- `inject_filters.py` — injects category/archive JS into all matching pages (idempotent)
+- Other one-off scripts were run inline for nav link fixes, GoDaddy removal, search widget removal
 
 ## To-Do Before Going Live
 1. Update DNS at GoDaddy — 4 A records pointing to GitHub Pages IPs + CNAME www → cwinski-r36.github.io
@@ -45,3 +92,7 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 4. Submit sitemap to Google Search Console (https://www.boulderqa.com/sitemap.xml)
 5. Test contact form — first submission triggers a Formsubmit.co verification email to info@boulderqa.com
 6. Cancel GoDaddy WordPress hosting plan (do this last)
+
+## Known Non-Issues (False Positives in Link Audits)
+- Anchor links (`../../index.html#home`, etc.) — audit scripts treat `#anchor` as a file path; these work fine in browser
+- Root-relative favicon paths (`/favicon.ico`, `/favicon-32x32.png`, `/favicon-192x192.png`, `/apple-touch-icon.png`) — break on localhost but work correctly on production domain
