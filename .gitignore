@@ -5,3 +5,11 @@ feed/
 comments/
 sample-page-2-2/
 index.html?*
+wp-content/plugins/revslider/
+wp-content/plugins/forms-contact/
+wp-content/plugins/corpo_toolkit/
+wp-includes/css/
+wp-includes/fonts/
+wp-includes/js/dist/
+wp-includes/js/underscore*
+wp-includes/js/wp-util*
