@@ -44,8 +44,17 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - `404.html` — custom branded 404 page
 - `wp-content/` — theme CSS, images, uploads (keep these)
 - `wp-includes/` — theme JS (keep these)
-- Note: files in `wp-content/themes/Impreza/` and `wp-includes/js/` have literal `?ver=X.X` in their filenames (a wget crawl artifact). They can't be served by any static host. The pages don't need them — all critical CSS (67KB) and JS (15KB) is already inlined in each page's `<style>` and `<script>` blocks.
-- Exception: font files (`wp-content/themes/Impreza/fonts/fa-*.woff2?ver=8.44`) ARE referenced by inline CSS `@font-face` blocks via `%3Fver=8.44` URLs. GitHub Pages decodes `%3F` → `?` and finds the file on disk. Verified working (HTTP 200 confirmed). Do not rename these files.
+- **CRITICAL — DO NOT REMOVE `%3Fver=` script/link tags for Impreza/jQuery files.** Both Python's `http.server` and GitHub Pages URL-decode `%3F` → `?` before looking up files, so they successfully serve files literally named `us.core.min.js?ver=8.44` on disk. Removing these tags breaks the entire page layout (Impreza's grid/nav/layout engine stops running). This mistake was made once — it caused a complete visual regression.
+- The following JS files exist on disk with `?ver=` in the name and MUST remain referenced in every page's `<script>` tags (with correct relative path prefix per depth):
+  - `wp-includes/js/jquery/jquery.min.js?ver=3.7.1`
+  - `wp-content/themes/Impreza/common/js/base/passive-events.min.js?ver=8.44`
+  - `wp-content/themes/Impreza/common/js/vendor/magnific-popup.js?ver=8.44`
+  - `wp-content/themes/Impreza/common/js/base/header.no-cache.min.js?ver=8.44`
+  - `wp-content/themes/Impreza/js/us.core.min.js?ver=8.44`
+  - `wp-content/themes/Impreza/common/js/vendor/owl.carousel.js?ver=8.44`
+  - `wp-content/themes/Impreza/common/js/vendor/royalslider.js?ver=8.44`
+- Font files (`wp-content/themes/Impreza/fonts/fa-*.woff2?ver=8.44`) are referenced in inline CSS `@font-face` via `%3Fver=8.44` URLs — same mechanism, also confirmed working. Do not rename these files.
+- The deleted plugin files (forms-contact, revslider) had `%3Fver=` tags correctly removed because those directories no longer exist on disk. The rule is: **if the file exists on disk, the `%3Fver=` script tag must stay.**
 
 ## Key Details
 - Brand color: `#be1e2d`
