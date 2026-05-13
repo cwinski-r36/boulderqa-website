@@ -44,17 +44,16 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - `404.html` — custom branded 404 page
 - `wp-content/` — theme CSS, images, uploads (keep these)
 - `wp-includes/` — theme JS (keep these)
-- **CRITICAL — DO NOT REMOVE `%3Fver=` script/link tags for Impreza/jQuery files.** Both Python's `http.server` and GitHub Pages URL-decode `%3F` → `?` before looking up files, so they successfully serve files literally named `us.core.min.js?ver=8.44` on disk. Removing these tags breaks the entire page layout (Impreza's grid/nav/layout engine stops running). This mistake was made once — it caused a complete visual regression.
-- The following JS files exist on disk with `?ver=` in the name and MUST remain referenced in every page's `<script>` tags (with correct relative path prefix per depth):
-  - `wp-includes/js/jquery/jquery.min.js?ver=3.7.1`
-  - `wp-content/themes/Impreza/common/js/base/passive-events.min.js?ver=8.44`
-  - `wp-content/themes/Impreza/common/js/vendor/magnific-popup.js?ver=8.44`
-  - `wp-content/themes/Impreza/common/js/base/header.no-cache.min.js?ver=8.44`
-  - `wp-content/themes/Impreza/js/us.core.min.js?ver=8.44`
-  - `wp-content/themes/Impreza/common/js/vendor/owl.carousel.js?ver=8.44`
-  - `wp-content/themes/Impreza/common/js/vendor/royalslider.js?ver=8.44`
-- Font files (`wp-content/themes/Impreza/fonts/fa-*.woff2?ver=8.44`) are referenced in inline CSS `@font-face` via `%3Fver=8.44` URLs — same mechanism, also confirmed working. Do not rename these files.
-- The deleted plugin files (forms-contact, revslider) had `%3Fver=` tags correctly removed because those directories no longer exist on disk. The rule is: **if the file exists on disk, the `%3Fver=` script tag must stay.**
+- **CRITICAL — The following Impreza/jQuery JS files MUST be referenced in every page's `<script>` tags** (with correct relative path prefix per depth). Removing them breaks the entire page layout. This mistake was made once and caused a complete visual regression.
+  - `wp-includes/js/jquery/jquery.min.js`
+  - `wp-content/themes/Impreza/common/js/base/passive-events.min.js`
+  - `wp-content/themes/Impreza/common/js/vendor/magnific-popup.js`
+  - `wp-content/themes/Impreza/common/js/base/header.no-cache.min.js`
+  - `wp-content/themes/Impreza/js/us.core.min.js`
+  - `wp-content/themes/Impreza/common/js/vendor/owl.carousel.js`
+  - `wp-content/themes/Impreza/common/js/vendor/royalslider.js`
+- These files were originally downloaded by wget with `?ver=X.X` in their filenames. Chrome normalizes `%3F` → `?` before HTTP requests, causing Python's http.server to strip the query string and fail to find the file. All files were renamed to clean names and all `<script src="...%3Fver=...">` tags were updated to use clean paths.
+- Font files (`wp-content/themes/Impreza/fonts/fa-*.woff2`, `material-icons.woff2`) were similarly renamed from `?ver=8.44` names and their `@font-face` url() references updated.
 
 ## Key Details
 - Brand color: `#be1e2d`
