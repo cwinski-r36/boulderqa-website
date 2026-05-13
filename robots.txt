@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /wp-content/mu-plugins/
+Disallow: /wp-content/plugins/
+Disallow: /feed/
+Disallow: /comments/
+Disallow: /sample-page-2-2/
+Disallow: /wp-json/
+
+Sitemap: https://www.boulderqa.com/sitemap.xml
