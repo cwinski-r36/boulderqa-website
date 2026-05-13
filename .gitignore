@@ -1,0 +1,7 @@
+wp-admin/
+wp-json/
+wp-content/mu-plugins/
+feed/
+comments/
+sample-page-2-2/
+index.html?*
