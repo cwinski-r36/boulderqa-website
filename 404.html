@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found – Boulder QA</title>
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis:400,700|PT+Sans:400,700&display=swap">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'PT Sans', sans-serif;
+      font-size: 16px;
+      color: #444;
+      background: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background: #fff;
+      box-shadow: 0 3px 5px -1px rgba(0,0,0,0.1);
+      padding: 0 2rem;
+      height: 80px;
+      display: flex;
+      align-items: center;
+    }
+    header a { display: flex; align-items: center; text-decoration: none; }
+    header img { height: 45px; width: auto; }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    .code {
+      font-family: 'Dosis', sans-serif;
+      font-size: 8rem;
+      font-weight: 700;
+      color: #be1e2d;
+      line-height: 1;
+    }
+    h1 {
+      font-family: 'Dosis', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #444;
+      margin: 1rem 0 0.75rem;
+    }
+    p {
+      font-size: 1.1rem;
+      color: #777;
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #be1e2d;
+      color: #fff;
+      font-family: 'Dosis', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.8rem 2.2rem;
+      border-radius: 0.3rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .btn:hover { background: #444; }
+    footer {
+      background: #333;
+      color: #999;
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      .code { font-size: 5rem; }
+      h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html" aria-label="Boulder QA Home">
+      <img src="wp-content/uploads/2020/08/bqalogo.png" alt="Boulder QA">
+    </a>
+  </header>
+  <main>
+    <div class="code">404</div>
+    <h1>Page Not Found</h1>
+    <p>The page you're looking for doesn't exist or may have moved. Let's get you back on track.</p>
+    <a class="btn" href="index.html">Go to Homepage</a>
+  </main>
+  <footer>
+    &copy; <script>document.write(new Date().getFullYear())</script> Boulder QA &amp; Consulting Inc. All rights reserved.
+  </footer>
+</body>
+</html>
