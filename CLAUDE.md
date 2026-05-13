@@ -28,6 +28,9 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - Added dynamic copyright year to all pages using `document.write(new Date().getFullYear())`
 - Fixed duplicate post on agile category page (removed secondary `for_current_wp_query` grid from all 18 category pages)
 - Created branded 404 page (`404.html`) — GitHub Pages serves this automatically for missing URLs
+- Stripped broken URL-encoded WP asset `<link>`/`<script>` tags from all 51 pages — wget URL-encoded `?ver=8.44` → `%3Fver=8.44` in file paths, making them unloadable; removed ~12-13 dead tags per page
+- Fixed one content link in blunders post (`index.html%3Fus_main_page_section=contact.html` → `index.html#contact`)
+- Ran full site audit: all nav links, logo links, copyright, JS filters, contact form, viewport meta, and search widget removal confirmed clean across all 52 pages
 
 ## Site Structure
 - `index.html` — homepage (one-page site with #home, #about, #services, #blog, #contact sections)
@@ -37,6 +40,7 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 - `404.html` — custom branded 404 page
 - `wp-content/` — theme CSS, images, uploads (keep these)
 - `wp-includes/` — theme JS (keep these)
+- Note: files in `wp-content/themes/Impreza/` and `wp-includes/js/` have literal `?ver=X.X` in their filenames (a wget crawl artifact). They can't be served by any static host. The pages don't need them — all critical CSS (67KB) and JS (15KB) is already inlined in each page's `<style>` and `<script>` blocks.
 
 ## Key Details
 - Brand color: `#be1e2d`
@@ -96,3 +100,8 @@ Convert www.boulderqa.com from a WordPress site (hosted on GoDaddy at $300+/year
 ## Known Non-Issues (False Positives in Link Audits)
 - Anchor links (`../../index.html#home`, etc.) — audit scripts treat `#anchor` as a file path; these work fine in browser
 - Root-relative favicon paths (`/favicon.ico`, `/favicon-32x32.png`, `/favicon-192x192.png`, `/apple-touch-icon.png`) — break on localhost but work correctly on production domain
+- `widget_search` string in theme CSS (`<style id="us-theme-options-css">`) — it's a CSS class selector, not an actual search widget element; the search widget HTML was fully removed
+- Logo audit: the logo `<img>` is wrapped in `<a>` but has a `<div class="w-image-h">` between them — naive regex checks will miss it; the links are correct
+
+## Impreza Theme
+The Impreza WordPress theme is frozen at v8.44. Theme updates are irrelevant — there is no WordPress installation, no update mechanism, and no server-side code. The theme's assets are just static files.
