@@ -390,10 +390,10 @@ a top notch resource network</h2>
 			</div>
 </div>
 <input type="hidden" name="_subject" value="New message from BoulderQA.com" />
-<input type="hidden" name="_next" value="https://www.boulderqa.com/?submitted=1" />
+<input type="hidden" name="_next" value="https://www.boulderqa.com/thank-you/" />
 <input type="hidden" name="_replyto" value="email" />
 <input type="hidden" name="_captcha" value="false" />
-<div class="w-form-row for_submit align_none"><button class="w-btn us-btn-style_1" style="font-size:18px;" type="submit" aria-label="Submit"><span class="w-btn-label">Submit</span></button></div></div></form><div id="form-success" style="display:none;text-align:center;padding:2rem 0;color:#fff;font-family:Dosis,sans-serif;"><p style="font-size:1.6rem;font-weight:700;text-transform:uppercase;margin-bottom:0.5rem;">Thank you!</p><p style="font-size:1rem;font-weight:400;text-transform:none;">Your message has been sent. We&#8217;ll be in touch shortly.</p></div></div></div></div></div></div></section>
+<div class="w-form-row for_submit align_none"><button class="w-btn us-btn-style_1" style="font-size:18px;" type="submit" aria-label="Submit"><span class="w-btn-label">Submit</span></button></div></div></form></div></div></div></div></div></section>
 </main>
 
 </div>
@@ -456,17 +456,5 @@ const a=JSON.parse(document.getElementById("wp-emoji-settings").textContent),o=(
 <script src="wp-content/themes/Impreza/js/us.core.min.js" id="us-core-js"></script>
 <script src="wp-content/themes/Impreza/common/js/vendor/owl.carousel.js" id="us-owl-js"></script>
 <script src="wp-content/themes/Impreza/common/js/vendor/royalslider.js" id="us-royalslider-js"></script>
-<script>
-(function(){
-  if(window.location.search.indexOf('submitted=1') === -1) return;
-  var form = document.querySelector('#contact form');
-  var msg = document.getElementById('form-success');
-  if(form) form.style.display = 'none';
-  if(msg) msg.style.display = 'block';
-  var section = document.getElementById('contact');
-  if(section) setTimeout(function(){ section.scrollIntoView({behavior:'smooth'}); }, 300);
-  history.replaceState(null, '', window.location.pathname);
-})();
-</script>
 </body>
 </html>

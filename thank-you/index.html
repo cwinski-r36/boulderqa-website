@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Message Sent &#8211; Boulder QA</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis:400,700|PT+Sans:400,700&display=swap">
+<meta name="robots" content="noindex">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#f2f2f2;font-family:'PT Sans',sans-serif;color:#444;min-height:100vh;display:flex;flex-direction:column;}
+  #bqa-r36-banner{position:fixed;top:0;left:0;right:0;z-index:200;background:#be1e2d;color:#fff;text-align:center;font-family:Dosis,sans-serif;font-size:14px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:8px 1rem;line-height:1.4;}
+  #bqa-r36-banner a{color:#fff;text-decoration:underline;text-underline-offset:3px;}
+  header{background:#fff;box-shadow:0 3px 5px -1px rgba(0,0,0,.1);padding:0 2rem;height:80px;display:flex;align-items:center;margin-top:36px;}
+  header a{display:flex;align-items:center;text-decoration:none;}
+  header img{height:35px;}
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:3rem 1rem;}
+  .card{background:#fff;border-radius:4px;box-shadow:0 5px 15px rgba(0,0,0,.1);padding:3rem 2.5rem;max-width:500px;width:100%;text-align:center;}
+  .check{width:64px;height:64px;background:#be1e2d;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;}
+  .check svg{width:32px;height:32px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+  h1{font-family:Dosis,sans-serif;font-size:2rem;font-weight:700;text-transform:uppercase;color:#444;margin-bottom:.75rem;}
+  p{font-size:1rem;line-height:1.6;color:#666;margin-bottom:1.5rem;}
+  .redirect-note{font-size:.875rem;color:#999;margin-bottom:1.5rem;}
+  a.btn{display:inline-block;background:#be1e2d;color:#fff;font-family:Dosis,sans-serif;font-weight:700;text-transform:uppercase;font-size:.95rem;letter-spacing:.05em;padding:.75rem 2rem;border-radius:3px;text-decoration:none;transition:background .2s;}
+  a.btn:hover{background:#444;}
+</style>
+</head>
+<body>
+<div id="bqa-r36-banner">Boulder QA has joined <a href="https://r36.com" target="_blank" rel="noopener">Route36</a></div>
+<header>
+  <a href="../index.html" aria-label="Boulder QA Home">
+    <img src="../wp-content/uploads/2020/08/bqalogo.png" alt="Boulder QA">
+  </a>
+</header>
+<main>
+  <div class="card">
+    <div class="check">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    </div>
+    <h1>Message Sent!</h1>
+    <p>Thank you for reaching out. We'll be in touch with you shortly.</p>
+    <p class="redirect-note">Returning to the site in <span id="countdown">5</span> seconds&hellip;</p>
+    <a class="btn" href="../index.html#contact">Back to Site</a>
+  </div>
+</main>
+<script>
+  var n = 5;
+  var el = document.getElementById('countdown');
+  var t = setInterval(function(){
+    n--;
+    if(el) el.textContent = n;
+    if(n <= 0){ clearInterval(t); window.location.href = '../index.html#contact'; }
+  }, 1000);
+</script>
+</body>
+</html>
